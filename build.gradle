@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'com.vaadin' version '0.14.6.0'
     id 'java'
 }
 
@@ -12,9 +13,25 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('vaadinVersion', "23.0.6")
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'com.vaadin:vaadin-spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "com.vaadin:vaadin-bom:${vaadinVersion}"
+    }
 }
 
 tasks.named('test') {
