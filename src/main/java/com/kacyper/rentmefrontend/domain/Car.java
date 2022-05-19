@@ -38,7 +38,7 @@ public class Car {
     @JsonProperty("vehicleClass")
     private VehicleClass vehicleClass;
 
-    @JsonProperty("id")
+    @JsonProperty("mileage")
     private int mileage;
 
     @JsonProperty("dailyCost")
@@ -46,4 +46,5 @@ public class Car {
 
     @JsonProperty("status")
     private Status status;
+
 }

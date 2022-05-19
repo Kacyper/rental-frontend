@@ -28,6 +28,12 @@ public class Rental {
     @JsonProperty("duration")
     private Long duration;
 
+    @JsonProperty("carId")
+    private Long carId;
+
+    @JsonProperty("userId")
+    private Long userId;
+
     @JsonProperty("cost")
     private BigDecimal cost;
 }
