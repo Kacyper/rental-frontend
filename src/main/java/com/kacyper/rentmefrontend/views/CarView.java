@@ -16,10 +16,13 @@ import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.spring.annotation.UIScope;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
+@UIScope
+@Component
 public class CarView extends VerticalLayout {
 
     private final Grid<Car> carGrid = new Grid<>();

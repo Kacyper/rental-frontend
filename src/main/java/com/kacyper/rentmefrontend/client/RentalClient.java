@@ -2,6 +2,7 @@ package com.kacyper.rentmefrontend.client;
 
 import com.kacyper.rentmefrontend.configuration.RentMeBackendConfiguration;
 import com.kacyper.rentmefrontend.domain.Rental;
+import com.kacyper.rentmefrontend.domain.RentalsExtended;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -28,27 +29,27 @@ public class RentalClient {
         this.rentMeBackendConfiguration = rentMeBackendConfiguration;
     }
 
-    public List<Rental> getAllRentals() {
+    public List<RentalsExtended> getAllRentals() {
         try {
             URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint())
                     .build()
                     .encode()
                     .toUri();
-            Rental[] answer = restTemplate.getForObject(url, Rental[].class);
-            return Arrays.asList(ofNullable(answer).orElse(new Rental[0]));
+            RentalsExtended[] answer = restTemplate.getForObject(url, RentalsExtended[].class);
+            return Arrays.asList(ofNullable(answer).orElse(new RentalsExtended[0]));
         } catch (RestClientException e) {
             return new ArrayList<>();
         }
     }
 
-    public List<Rental> getRentalsByUsersId(Long userId) {
+    public List<RentalsExtended> getRentalsByUsersId(Long userId) {
         try {
             URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint() + "/byUserId/" + userId)
                     .build()
                     .encode()
                     .toUri();
-            Rental[] answer = restTemplate.getForObject(url, Rental[].class);
-            return Arrays.asList(ofNullable(answer).orElse(new Rental[0]));
+            RentalsExtended[] answer = restTemplate.getForObject(url, RentalsExtended[].class);
+            return Arrays.asList(ofNullable(answer).orElse(new RentalsExtended[0]));
         } catch (RestClientException e) {
             return new ArrayList<>();
         }
@@ -68,5 +69,13 @@ public class RentalClient {
                 .encode()
                 .toUri();
         restTemplate.delete(url);
+    }
+
+    public void modifyRental(Rental rental) {
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint())
+                .build()
+                .encode()
+                .toUri();
+        restTemplate.put(url, rental);
     }
 }

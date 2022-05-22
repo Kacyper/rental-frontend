@@ -92,4 +92,11 @@ public class UserClient {
         restTemplate.delete(url);
     }
 
+    public void updateUser(User user) {
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint())
+                .build()
+                .encode()
+                .toUri();
+        restTemplate.put(url, user);
+    }
 }
