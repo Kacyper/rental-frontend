@@ -22,10 +22,6 @@ public class MainView extends VerticalLayout {
     private final Tab carTab = new Tab("Cars");
     private final Tab usersTab = new Tab("Users");
     private final Tab userTab = new Tab("Account");
-    private final Tab rentalTab = new Tab("Rental");
-    private final Tab vinCheckTab = new Tab("Vin Check");
-    private final Tab logoutTab = new Tab();
-    private User loggedUser;
 
     public MainView(CarView carView, RentalView rentalView, UsersView usersView, UserView userView, VinCheckView vinCheckView, LogoutView logoutView) {
         this.carView = carView;
@@ -36,10 +32,13 @@ public class MainView extends VerticalLayout {
         this.logoutView = logoutView;
 
         tabs.add(carView, carTab);
+        Tab rentalTab = new Tab("Rental");
         tabs.add(rentalView, rentalTab);
         tabs.add(usersView, usersTab);
         tabs.add(userView, userTab);
+        Tab vinCheckTab = new Tab("Vin Check");
         tabs.add(vinCheckView, vinCheckTab);
+        Tab logoutTab = new Tab();
         tabs.add(logoutView, logoutTab);
 
         Button logoutButton = createLogout();
@@ -62,7 +61,6 @@ public class MainView extends VerticalLayout {
     }
 
     public void userView(User user) {
-        loggedUser = user;
         userTab.setVisible(true);
         usersTab.setVisible(false);
         carView.updateUserCars(user);
