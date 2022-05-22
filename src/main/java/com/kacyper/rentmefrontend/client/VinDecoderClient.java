@@ -1,6 +1,7 @@
 package com.kacyper.rentmefrontend.client;
 
 import com.kacyper.rentmefrontend.api.VinApi;
+import com.kacyper.rentmefrontend.api.VinDecoderDto;
 import com.kacyper.rentmefrontend.configuration.RentMeBackendConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -23,7 +24,7 @@ public class VinDecoderClient {
         this.rentMeBackendConfiguration = rentMeBackendConfiguration;
     }
 
-    public VinApi decodingVin(VinApi vinApi) {
+    public VinDecoderDto decodingVin(VinApi vinApi) {
         try {
             URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getVindecoderApiEndpoint() + "/" + vinApi)
                     .build()
@@ -35,4 +36,5 @@ public class VinDecoderClient {
             return new VinApi();
         }
     }
+
 }

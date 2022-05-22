@@ -18,15 +18,12 @@ import org.springframework.stereotype.Component;
 public class UserView extends VerticalLayout {
 
     private final UserClient userClient;
-
     private final Binder<User> userBinder = new Binder<>();
-
     private final TextField firstName = new TextField("First Name");
     private final TextField lastName = new TextField("Last Name");
     private final TextField email = new TextField("Email");
     private final TextField password = new TextField("Password");
     private final IntegerField phoneNumber = new IntegerField("Phone Number");
-
     private User loggedUser = new User();
     private Long userId;
 
@@ -64,6 +61,10 @@ public class UserView extends VerticalLayout {
         return updateUser;
     }
 
+    private Button dismissUpdateButton(Dialog dialog) {
+        return new Button("Dismiss", event -> dialog.close());
+    }
+
     private Button confirmUpdatingButton(Dialog dialog) {
         return new Button("Update", event -> {
             if (fieldsAreFilled()) {
@@ -75,7 +76,25 @@ public class UserView extends VerticalLayout {
                 Dialog warningDialog = warningAlert();
                 warningDialog.open();
             }
-        })
+        });
+    }
+
+    private boolean fieldsAreFilled() {
+        return (!firstName.getValue().equals("") &&
+                !lastName.getValue().equals("") &&
+                !email.getValue().equals("") &&
+                !password.getValue().equals("") &&
+                phoneNumber.getValue() != null);
+    }
+
+    private Dialog warningAlert() {
+        Dialog warningAlert = new Dialog();
+        VerticalLayout layout = new VerticalLayout();
+        Button cancel = new Button("Cancel", event -> warningAlert.close());
+        Label label = new Label("Your account cannot be deleted.");
+        layout.add(label, cancel);
+        warningAlert.add(layout);
+        return warningAlert;
     }
 
     private void updateUser(User user) {

@@ -13,31 +13,18 @@ import com.vaadin.flow.component.button.Button;
 public class MainView extends VerticalLayout {
 
     private final CarView carView;
-
     private final RentalView rentalView;
-
     private final UsersView usersView;
-
     private final UserView userView;
-
     private final VinCheckView vinCheckView;
-
     private final LogoutView logoutView;
-
     private final PageTabs tabs = new PageTabs();
-
     private final Tab carTab = new Tab("Cars");
-
     private final Tab usersTab = new Tab("Users");
-
     private final Tab userTab = new Tab("Account");
-
     private final Tab rentalTab = new Tab("Rental");
-
     private final Tab vinCheckTab = new Tab("Vin Check");
-
     private final Tab logoutTab = new Tab();
-
     private User loggedUser;
 
     public MainView(CarView carView, RentalView rentalView, UsersView usersView, UserView userView, VinCheckView vinCheckView, LogoutView logoutView) {
@@ -53,7 +40,7 @@ public class MainView extends VerticalLayout {
         tabs.add(usersView, usersTab);
         tabs.add(userView, userTab);
         tabs.add(vinCheckView, vinCheckTab);
-        tabs.add(LogoutView, logoutTab);
+        tabs.add(logoutView, logoutTab);
 
         Button logoutButton = createLogout();
         logoutTab.add(logoutButton);
