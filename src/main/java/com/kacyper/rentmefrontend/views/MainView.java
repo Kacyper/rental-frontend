@@ -48,7 +48,6 @@ public class MainView extends VerticalLayout {
         add(tabs);
 
     }
-
     private Button createLogout() {
         return new Button("Logout", event -> logoutView.displayLogoutDialog());
     }
