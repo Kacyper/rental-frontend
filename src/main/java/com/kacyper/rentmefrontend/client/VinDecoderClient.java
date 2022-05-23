@@ -16,7 +16,6 @@ import static java.util.Optional.ofNullable;
 public class VinDecoderClient {
 
     private final RestTemplate restTemplate;
-
     private final RentMeBackendConfiguration rentMeBackendConfiguration;
 
     public VinDecoderClient(RestTemplate restTemplate, RentMeBackendConfiguration rentMeBackendConfiguration) {
