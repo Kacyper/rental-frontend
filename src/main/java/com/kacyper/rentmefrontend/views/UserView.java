@@ -25,7 +25,7 @@ public class UserView extends VerticalLayout {
     private final TextField password = new TextField("Password");
     private final IntegerField phoneNumber = new IntegerField("Phone Number");
     private User loggedUser = new User();
-    private Long userId;
+//    private Long userId;
 
     public UserView(UserClient userClient) {
         this.userClient = userClient;
@@ -39,7 +39,8 @@ public class UserView extends VerticalLayout {
         Button updateUser = updateUserAccountButton();
         horizontalLayout.add(deleteUser, updateUser);
 
-        accountLayout.add(firstName, lastName, email, password, phoneNumber, horizontalLayout);
+        IntegerField userId = new IntegerField("User ID");
+        accountLayout.add(firstName, lastName, email, password, phoneNumber, userId, horizontalLayout);
 
         add(accountLayout);
         setHorizontalComponentAlignment(Alignment.CENTER, accountLayout);
@@ -98,7 +99,7 @@ public class UserView extends VerticalLayout {
     }
 
     private void updateUser(User user) {
-        user.setId(userId);
+        user.setId(user.getId());
         userClient.updateUser(user);
     }
 
@@ -130,12 +131,12 @@ public class UserView extends VerticalLayout {
     }
 
     private void deleteUser(User user) {
-        userClient.deleteUser(user.getId());
+        loggedUser = user;
+        userClient.deleteUser(loggedUser.getId());
     }
 
     public void updateUsersForUser(User user) {
         loggedUser = user;
-        userId = user.getId();
         userBinder.readBean(user);
     }
 

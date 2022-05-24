@@ -30,7 +30,7 @@ public class CarClient {
 
     public List<Car> getCar() {
         try {
-            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint())
+            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint() + "/getCars")
                     .build()
                     .encode()
                     .toUri();
@@ -42,7 +42,7 @@ public class CarClient {
     }
 
     public void saveCar(Car car) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint())
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint() + "/addCar")
                 .build()
                 .encode()
                 .toUri();
@@ -50,7 +50,7 @@ public class CarClient {
     }
 
     public void updateCar(Car car) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint())
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint() + "/modifyCar")
                 .build()
                 .encode()
                 .toUri();

@@ -9,9 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Optional.ofNullable;
 
@@ -29,7 +27,7 @@ public class UserClient {
     }
 
     public void createUser(User user) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint())
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint() + "/createUser")
                 .build()
                 .encode()
                 .toUri();
@@ -47,12 +45,14 @@ public class UserClient {
 
     public List<User> getAllUsers() {
         try {
-            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint())
+            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint() + "/getAllUsers")
                     .build()
                     .encode()
                     .toUri();
             User[] answer = restTemplate.getForObject(url, User[].class);
-            return Arrays.asList(ofNullable(answer).orElse(new User[0]));
+            return Optional.ofNullable(answer)
+                    .map(Arrays::asList)
+                    .orElse(Collections.emptyList());
         } catch (RestClientException e) {
             return new ArrayList<>();
         }
@@ -93,10 +93,11 @@ public class UserClient {
     }
 
     public void updateUser(User user) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint())
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getUserEndpoint() + "/updateUser")
                 .build()
                 .encode()
                 .toUri();
         restTemplate.put(url, user);
     }
+
 }

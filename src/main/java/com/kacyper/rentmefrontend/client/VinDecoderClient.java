@@ -25,14 +25,14 @@ public class VinDecoderClient {
 
     public VinDecoderDto decodingVin(VinApi vinApi) {
         try {
-            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getVindecoderApiEndpoint() + "/" + vinApi)
+            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getVindecoderApiEndpoint() + "/" + vinApi.getVinNumber())
                     .build()
                     .encode()
                     .toUri();
-            VinApi answer = restTemplate.getForObject(url, VinApi.class);
-            return ofNullable(answer).orElse(new VinApi());
+            VinDecoderDto answer = restTemplate.getForObject(url, VinDecoderDto.class);
+            return ofNullable(answer).orElse(new VinDecoderDto());
         } catch (RestClientException e) {
-            return new VinApi();
+            return new VinDecoderDto();
         }
     }
 

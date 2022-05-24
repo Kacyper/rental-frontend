@@ -52,7 +52,7 @@ public class VinCheckView extends VerticalLayout {
     }
 
     private Button decodeVin() {
-        return new Button("Decoding VIN for you", event -> dialog.open());
+        return new Button("Click me to check VIN Number", event -> dialog.open());
     }
 
     private Button vinDecodeButton() {
@@ -84,7 +84,10 @@ public class VinCheckView extends VerticalLayout {
         grid.addColumn(VinDecoderBodyDto::getModel).setHeader("Car Model");
         grid.addColumn(VinDecoderBodyDto::getFuelType).setHeader("Fuel");
         grid.addColumn(VinDecoderBodyDto::getProductionYear).setHeader("Production Year");
+        grid.addColumn(VinDecoderBodyDto::getBodyClass).setHeader("Body Class");
         grid.addColumn(VinDecoderBodyDto::getVehicleType).setHeader("Vehicle Type");
+        grid.addColumn(VinDecoderBodyDto::getAbs).setHeader("What type of ABS does it have?");
+        grid.addColumn(VinDecoderBodyDto::getPlantCity).setHeader("Where was it made?");
     }
 
 }

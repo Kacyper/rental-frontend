@@ -24,8 +24,6 @@ public class RentalView extends VerticalLayout {
 
     private final RentalClient rentalClient;
 
-    private final Dialog longerRentDialog = new Dialog();
-
     private final Dialog modifyRentDialog = new Dialog();
 
     private final Binder<Rental> binderForModificationRent = new Binder<>();
@@ -43,6 +41,7 @@ public class RentalView extends VerticalLayout {
         bindFields();
 
         VerticalLayout extendLayout = new VerticalLayout();
+        Dialog longerRentDialog = new Dialog();
         longerRentDialog.isCloseOnOutsideClick();
         longerRentDialog.add(extendLayout);
 
@@ -62,6 +61,10 @@ public class RentalView extends VerticalLayout {
     }
 
 
+    public void showRentals() {
+        List<RentalsExtended> rentalsExtendedList = rentalClient.getAllRentals();
+        rentalGrid.setItems(rentalsExtendedList);
+     }
 
     public void updateRentalForUser(User user) {
         loggedUser = user;

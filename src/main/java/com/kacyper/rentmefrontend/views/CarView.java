@@ -94,6 +94,7 @@ public class CarView extends VerticalLayout {
 
         addCar.addClickListener(c -> carDialog.open());
 
+        updateAdminsCars();
         add(addCar, carGrid, carDialog);
 
     }
@@ -128,7 +129,6 @@ public class CarView extends VerticalLayout {
         vehicleClass.clear();
         mileage.clear();
         dailyCost.clear();
-        status.clear();
     }
 
     private Button saveCarButton() {
@@ -150,11 +150,11 @@ public class CarView extends VerticalLayout {
             updatingCar.readBean(car);
             updateCarDialog.open();
         });
-        if (loggedUser == null) {
-            updateButton.setEnabled(!car.getStatus().equals(Status.RENTED));
-        } else {
-            updateButton.setEnabled(false);
-        }
+       if (loggedUser == null) {
+           updateButton.setEnabled(!car.getStatus().equals(Status.RENTED));
+       } else {
+           updateButton.setEnabled(false);
+       }
         return updateButton;
     }
 
@@ -205,8 +205,6 @@ public class CarView extends VerticalLayout {
         Button deleteButton = new Button("Delete", event -> deleteCar.open());
         if (loggedUser == null) {
             deleteButton.setEnabled(!car.getStatus().equals(Status.RENTED));
-        } else {
-            deleteButton.setEnabled(false);
         }
         return deleteButton;
     }
@@ -252,14 +250,13 @@ public class CarView extends VerticalLayout {
                 !fuel.getValue().equals("") &&
                 !vehicleClass.getValue().equals("") &&
                 mileage.getValue() != null &&
-                dailyCost.getValue() != null &&
-                !status.getValue().equals(""));
+                dailyCost.getValue() != null);
+
     }
 
     private boolean updateCarFieldsFilled() {
         return (mileageUpdate.getValue() != null &&
-                dailyCostUpdate.getValue() != null &&
-                !statusUpdate.getValue().equals(""));
+                dailyCostUpdate.getValue() != null);
     }
 
     private void setColumns() {

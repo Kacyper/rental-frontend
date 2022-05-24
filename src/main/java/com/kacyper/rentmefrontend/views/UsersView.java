@@ -50,6 +50,7 @@ public class UsersView extends VerticalLayout {
         setColumns();
 
         Button addUser = addUserButton();
+        updateUsers();
         add(addUser, userGrid, dialog);
 
     }

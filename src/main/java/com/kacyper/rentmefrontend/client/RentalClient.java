@@ -31,12 +31,12 @@ public class RentalClient {
 
     public List<RentalsExtended> getAllRentals() {
         try {
-            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint())
+            URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint() + "/getAllRentals")
                     .build()
                     .encode()
                     .toUri();
             RentalsExtended[] answer = restTemplate.getForObject(url, RentalsExtended[].class);
-            return Arrays.asList(ofNullable(answer).orElse(new RentalsExtended[0]));
+            return Arrays.asList(ofNullable(answer).orElse(new RentalsExtended[1]));
         } catch (RestClientException e) {
             return new ArrayList<>();
         }
@@ -56,7 +56,7 @@ public class RentalClient {
     }
 
     public void createRent(Rental rental) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint())
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint() + "/createRent")
                 .build()
                 .encode()
                 .toUri();
@@ -72,7 +72,7 @@ public class RentalClient {
     }
 
     public void modifyRental(Rental rental) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint())
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getRentalEndpoint() + "/modifyRent")
                 .build()
                 .encode()
                 .toUri();
