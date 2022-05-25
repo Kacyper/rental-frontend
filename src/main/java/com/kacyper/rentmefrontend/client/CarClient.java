@@ -50,7 +50,7 @@ public class CarClient {
     }
 
     public void updateCar(Car car) {
-        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint() + "/modifyCar")
+        URI url = UriComponentsBuilder.fromHttpUrl(rentMeBackendConfiguration.getCarEndpoint() + "/updateCar")
                 .build()
                 .encode()
                 .toUri();

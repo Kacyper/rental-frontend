@@ -1,13 +1,10 @@
 package com.kacyper.rentmefrontend.views;
 
 import com.kacyper.rentmefrontend.client.CarClient;
-import com.kacyper.rentmefrontend.client.RentalClient;
 import com.kacyper.rentmefrontend.domain.Car;
-import com.kacyper.rentmefrontend.domain.Rental;
 import com.kacyper.rentmefrontend.domain.User;
 import com.kacyper.rentmefrontend.form.Status;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
@@ -27,8 +24,6 @@ public class CarView extends VerticalLayout {
 
     private final Grid<Car> carGrid = new Grid<>();
     private final CarClient carClient;
-    private final RentalClient rentalClient;
-    private final RentalView rentalView;
 
     private final Car car = new Car();
 
@@ -42,27 +37,20 @@ public class CarView extends VerticalLayout {
     private final TextField vehicleClass = new TextField("Vehicle Class");
     private final IntegerField mileage = new IntegerField("Mileage");
     private final BigDecimalField dailyCost = new BigDecimalField("Daily Cost");
-    private final TextField status = new TextField("Status");
 
     private final Dialog updateCarDialog = new Dialog();
     private final Binder<Car> updatingCar = new Binder<>();
     private final IntegerField mileageUpdate = new IntegerField("Mileage");
     private final BigDecimalField dailyCostUpdate = new BigDecimalField("Daily Cost");
-    private final TextField statusUpdate = new TextField("Status");
 
-    private final Dialog rentalDialog = new Dialog();
-    private final Binder<Rental> rentalBinder = new Binder<>();
-    private final DatePicker rentedFrom = new DatePicker("Rented from");
-    private final DatePicker rentedTo = new DatePicker("Rented to");
 
     Button addCar = new Button("Add a new car");
     private User loggedUser;
     private Long carId;
 
-    public CarView(CarClient carClient, RentalClient rentalClient, RentalView rentalView) {
+
+    public CarView(CarClient carClient) {
         this.carClient = carClient;
-        this.rentalClient = rentalClient;
-        this.rentalView = rentalView;
 
         bindFields();
 
@@ -79,15 +67,8 @@ public class CarView extends VerticalLayout {
         updateCarDialog.isCloseOnOutsideClick();
         updateCarDialog.add(anUpdateCarDialogLayout);
 
-        VerticalLayout aNewRentDialogLayout = new VerticalLayout();
-        Button confirmRentButton = confirmRent();
-        aNewRentDialogLayout.add(rentedFrom, rentedTo, confirmRentButton);
-        rentalDialog.isCloseOnOutsideClick();
-        rentalDialog.add(aNewRentDialogLayout);
-
         setColumns();
 
-        carGrid.addComponentColumn(this::addRentButton);
         carGrid.addComponentColumn(this::updateCarButton);
         carGrid.addComponentColumn(this::deleteButton);
 
@@ -101,13 +82,6 @@ public class CarView extends VerticalLayout {
     void updateAdminsCars() {
         loggedUser = null;
         addCar.setEnabled(true);
-        List<Car> carList = carClient.getCar();
-        carGrid.setItems(carList);
-    }
-
-    void updateUserCars(User user) {
-        loggedUser = user;
-        addCar.setEnabled(false);
         List<Car> carList = carClient.getCar();
         carGrid.setItems(carList);
     }
@@ -172,33 +146,6 @@ public class CarView extends VerticalLayout {
         });
     }
 
-    private Button addRentButton(Car car) {
-        Button rentButton = new Button("Rent");
-        rentButton.addClickListener(r -> {
-            carId = car.getId();
-            rentalDialog.open();
-        });
-        if (loggedUser == null) {
-            rentButton.setEnabled(true);
-        } else {
-            rentButton.setEnabled(!car.getStatus().equals(Status.RENTED));
-        }
-        return rentButton;
-    }
-
-    private Button confirmRent() {
-        return new Button("Confirm car rent", event -> {
-            Rental rental = new Rental();
-            rentalBinder.writeBeanIfValid(rental);
-            rental.setCarId(carId);
-            rental.setUserId(loggedUser.getId());
-            rentalClient.createRent(rental);
-            rentalView.updateRentalForUser(loggedUser);
-            updateUserCars(loggedUser);
-            rentalDialog.close();
-        });
-    }
-
     private Button deleteButton(Car car) {
         Dialog deleteCar = deleteCarDialog(car);
         Button deleteButton = new Button("Delete", event -> deleteCar.open());
@@ -235,8 +182,8 @@ public class CarView extends VerticalLayout {
         Dialog warning = new Dialog();
         VerticalLayout warningLayout = new VerticalLayout();
         Button dismissWarning = new Button("Dismiss Warning", event -> warning.close());
-        Label warningLable = new Label("Don't miss any field.");
-        warningLayout.add(warningLable, dismissWarning);
+        Label warningLabel = new Label("Don't miss any field.");
+        warningLayout.add(warningLabel, dismissWarning);
         warning.add(warningLayout);
         return warning;
     }
@@ -280,10 +227,6 @@ public class CarView extends VerticalLayout {
 
         updatingCar.forField(mileageUpdate).bind(Car::getMileage, Car::setMileage);
         updatingCar.forField(dailyCostUpdate).bind(Car::getDailyCost, Car::setDailyCost);
-
-        rentalBinder.forField(rentedFrom).bind(Rental::getRentedFrom, Rental::setRentedFrom);
-        rentalBinder.forField(rentedTo).bind(Rental::getRentedTo, Rental::setRentedTo);
-
     }
 
 
