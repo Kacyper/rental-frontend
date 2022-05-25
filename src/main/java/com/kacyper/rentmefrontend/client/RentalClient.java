@@ -36,7 +36,7 @@ public class RentalClient {
                     .encode()
                     .toUri();
             RentalsExtended[] answer = restTemplate.getForObject(url, RentalsExtended[].class);
-            return Arrays.asList(ofNullable(answer).orElse(new RentalsExtended[1]));
+            return Arrays.asList(ofNullable(answer).orElse(new RentalsExtended[0]));
         } catch (RestClientException e) {
             return new ArrayList<>();
         }

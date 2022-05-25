@@ -22,4 +22,10 @@ public class RentMeBackendConfiguration {
 
     @Value("${login.api.endpoint}")
     private String loginEndpoint;
+
+    @Value("${token.api.endpoint}")
+    private String tokenEndpoint;
+
+
+
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.vaadin.flow.component.button.Button;
 @UIScope
 @Component
-@Route
+@Route(value = "mainView")
 public class MainView extends VerticalLayout {
 
     private final CarView carView;

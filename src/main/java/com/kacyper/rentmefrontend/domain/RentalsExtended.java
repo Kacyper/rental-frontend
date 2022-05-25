@@ -3,12 +3,14 @@ package com.kacyper.rentmefrontend.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor
+@ToString
 public class RentalsExtended {
 
     private Long id;

@@ -60,12 +60,6 @@ public class RentalView extends VerticalLayout {
 
     }
 
-
-    public void showRentals() {
-        List<RentalsExtended> rentalsExtendedList = rentalClient.getAllRentals();
-        rentalGrid.setItems(rentalsExtendedList);
-     }
-
     public void updateRentalForUser(User user) {
         loggedUser = user;
         List<RentalsExtended> rentalsDtoList = rentalClient.getRentalsByUsersId(user.getId());

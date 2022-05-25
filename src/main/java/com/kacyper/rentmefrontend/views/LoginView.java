@@ -13,11 +13,12 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @UIScope
 @Component
-@Route
+@Route(value = "")
 public class LoginView extends VerticalLayout {
 
     private final MainView mainView;
@@ -29,9 +30,9 @@ public class LoginView extends VerticalLayout {
     private final EmailField email = new EmailField("EMAIL");
     private final PasswordField password = new PasswordField("Password");
     private final Binder<Login> binder = new Binder<>();
-    private User user;
+    public User user;
 
-    public LoginView(MainView mainView, LoginClient loginClient, UserClient userClient) {
+    public LoginView(@Qualifier("mainView") MainView mainView, LoginClient loginClient, UserClient userClient) {
         this.mainView = mainView;
         this.loginClient = loginClient;
         this.userClient = userClient;
@@ -39,8 +40,7 @@ public class LoginView extends VerticalLayout {
         bindFields();
 
         Button login = newLoginButton();
-        Button register = newRegisterButton();
-        add(email, password, login, register);
+        add(email, password, login);
         setAlignItems(Alignment.CENTER);
     }
 
@@ -55,7 +55,7 @@ public class LoginView extends VerticalLayout {
             getUI().ifPresent(ui -> ui.navigate("mainView"));
         } else  {
             if (loginClient.isLoginExisting(login)) {
-                user = userClient.getUserByEmail(user.getEmail());
+                user = userClient.getUserByEmail(login.getEmail());
                 mainView.userView(user);
                 mainView.setStartingTab();
                 getUI().ifPresent(ui -> ui.navigate("mainView"));
@@ -74,12 +74,6 @@ public class LoginView extends VerticalLayout {
         invalidLayout.add(userDoesntExistLabel, cancel);
         userDoesntExist.add(invalidLayout);
         return userDoesntExist;
-    }
-
-    private Button newRegisterButton() {
-        return new Button("Create your account!", event -> {getUI().ifPresent(u -> u.navigate(""));
-        clearFields();
-        });
     }
 
     private Button newLoginButton() {

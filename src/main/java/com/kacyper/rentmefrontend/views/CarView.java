@@ -56,7 +56,6 @@ public class CarView extends VerticalLayout {
     private final DatePicker rentedTo = new DatePicker("Rented to");
 
     Button addCar = new Button("Add a new car");
-
     private User loggedUser;
     private Long carId;
 
@@ -180,7 +179,7 @@ public class CarView extends VerticalLayout {
             rentalDialog.open();
         });
         if (loggedUser == null) {
-            rentButton.setEnabled(false);
+            rentButton.setEnabled(true);
         } else {
             rentButton.setEnabled(!car.getStatus().equals(Status.RENTED));
         }
